@@ -6,7 +6,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 exports.register = async (req, res) => {
   // TODO : Récupérer le nom d'utilisateur username et le mot de passe password depuis le corps de la requête
-
+const { username, password } = req.body;
   if (!username || !password) {
     console.log(" ⚠️ Registration failed: Missing username or password");
     return res.status(400).json({ error: "Username and password are required" });
@@ -19,12 +19,13 @@ exports.register = async (req, res) => {
   }
 
   // TODO : Hash the password before storing it
-  const hash = ;
+  const hash= await bcrypt.hash(password,10);
   const user = userRepo.createUser({ username, password: hash, currentRoom: 1 });
 
   // TODO : Return a success message 
-
+   res.status(201).json({ message: 'Utilisateur créé ✅' });
 };
+console.log('hash');
 
 exports.login = async (req, res) => {
   // TODO : Récupérer le nom d'utilisateur username et le mot de passe password depuis le corps de la requête
@@ -36,12 +37,12 @@ exports.login = async (req, res) => {
   // TODO : Vérifier si l'utilisateur existe sinon retourner un statut 401
 
   // Compare the provided password with the stored hash
-  const match =;
+  // const match =;
   if (!match) return res.status(401).json({ error: "Invalid credentials" });
 
   console.log(" ✅ User authenticated:", username);
   // TODO : Sign the JWT token with the username and JWT_SECRET
-  const token = ;
+  // const token = ;
   // TODO : Return the token in the response in json
 
 };
