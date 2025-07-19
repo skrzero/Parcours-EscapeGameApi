@@ -17,6 +17,15 @@ app.get("/ping", (req, res) => res.send("pong"));
 app.use("/auth", authRoutes);
 app.use("/rooms", roomRoutes);
 
+process.on('uncaughtException', err => {
+  console.error('Uncaught Exception:', err);
+});
+
+process.on('unhandledRejection', err => {
+  console.error('Unhandled Rejection:', err);
+});
+
+
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
